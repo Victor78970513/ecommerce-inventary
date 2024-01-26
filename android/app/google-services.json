@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "347100845168",
+    "project_id": "yosyelan-a2aae",
+    "storage_bucket": "yosyelan-a2aae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347100845168:android:5319a9e2b31f354f6e10b5",
+        "android_client_info": {
+          "package_name": "com.example.yosyelan_inventary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe9y5J3NyfclQJd0Iu8i118xrDgbKT3wU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
