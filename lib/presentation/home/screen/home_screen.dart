@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:yosyelan_inventary/presentation/home/widgets/custom_navigationbar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  final PageController _pageController = PageController();
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: PageView());
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView(
+              onPageChanged: (page) {},
+              controller: _pageController,
+              children: const [
+                Text("hola"),
+                Text("hola2"),
+                Text("hola3"),
+              ],
+            ),
+          ),
+          CustomNavigationBar(
+            onIndexSelected: (int value) {},
+          ),
+        ],
+      ),
+    );
   }
 }
