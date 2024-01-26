@@ -28,6 +28,7 @@ class CategoriesBoardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              //TODO: USE CATEGORIES FROM BACKEND
               CustomCategoryColumnCard(
                 isleft: true,
                 itemCount: i ~/ 2 + 1,
