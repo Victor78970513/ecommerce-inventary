@@ -9,9 +9,9 @@ class CustomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     const color = Colors.white;
-    const iconSize = 35.0;
+    const iconSize = 30.0;
     return Container(
-      height: size.height * 0.1,
+      height: size.height * 0.08,
       width: size.width,
       decoration: const BoxDecoration(
         color: Colors.black,
