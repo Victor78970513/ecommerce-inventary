@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/models/category_model.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
+import 'package:yosyelan_inventary/presentation/products/bloc/products/products_bloc.dart';
 
 class CategoriesBoardWidget extends StatelessWidget {
   const CategoriesBoardWidget({super.key});
@@ -73,7 +74,9 @@ class CustomCategoryColumnCard extends StatelessWidget {
       (index) {
         return GestureDetector(
           onTap: () {
-            print(categories[index]);
+            context.read<ProductsBloc>().add(
+                // OnGetProductsByCategoryEvent(categoryId: categories[index].id));
+                OnGetAllProductsEvent());
           },
           child: Container(
             height: isleft
@@ -94,7 +97,9 @@ class CustomCategoryColumnCard extends StatelessWidget {
                 bottomRight: const Radius.circular(45),
               ),
             ),
-            child: Center(child: Text(categories[index].name)),
+            child: Center(
+              child: Text("${categories[index].id} ${categories[index].name}"),
+            ),
           ),
         );
       },

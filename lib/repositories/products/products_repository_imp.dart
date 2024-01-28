@@ -16,12 +16,14 @@ class ProductsRepositoryImp extends ProductsRepository {
   }
 
   @override
-  Future<List<Product>> getProductsByCategory() async {
+  Future<List<Product>> getProductsByCategory(int categoryId) async {
     List<Product> categoryProducts = [];
     CollectionReference collectionProductsByCategoryReference =
-        db.collection("category");
+        db.collection("products");
     QuerySnapshot queryCategoryProducts =
-        await collectionProductsByCategoryReference.get();
+        await collectionProductsByCategoryReference
+            .where('category', isEqualTo: 1)
+            .get();
 
     queryCategoryProducts.docs.forEach((product) =>
         categoryProducts.add(Product.fromDocumentSnapshot(product)));

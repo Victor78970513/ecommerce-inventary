@@ -24,9 +24,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     try {
       emit(state.copyWith(loadingCategories: true));
       final resp = await _categoriesRepository.getAllCategories();
-      emit(state.copyWith(categories: resp));
+      emit(state.copyWith(categories: resp, loadingCategories: false));
     } catch (e) {
-      emit(state.copyWith(error: true));
+      emit(state.copyWith(error: true, loadingCategories: false));
       print(e);
     }
   }

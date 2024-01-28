@@ -5,6 +5,7 @@ import 'package:yosyelan_inventary/firebase_options.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/screens/home_screen.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
+import 'package:yosyelan_inventary/presentation/products/bloc/products/products_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => CategoryBloc()),
+        BlocProvider(create: (context) => ProductsBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
