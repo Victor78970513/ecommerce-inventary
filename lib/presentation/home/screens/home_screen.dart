@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                 homeBloc.add(HomeChangeScreenEvent(index: value));
                 _pageController.animateToPage(
                   value,
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 100),
                   curve: Curves.linear,
                 );
               },

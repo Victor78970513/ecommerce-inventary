@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/firebase_options.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/screens/home_screen.dart';
+import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => HomeBloc())],
+      providers: [
+        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => CategoryBloc()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',

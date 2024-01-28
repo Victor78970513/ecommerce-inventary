@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
 import 'package:yosyelan_inventary/presentation/products/widgets/categories_board.dart';
 
-class CategorysScreen extends StatelessWidget {
+class CategorysScreen extends StatefulWidget {
   const CategorysScreen({super.key});
+
+  @override
+  State<CategorysScreen> createState() => _CategorysScreenState();
+}
+
+class _CategorysScreenState extends State<CategorysScreen> {
+  @override
+  void initState() {
+    context.read<CategoryBloc>().add(OnGetCategoriesEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
