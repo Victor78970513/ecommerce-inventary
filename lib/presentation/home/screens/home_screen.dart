@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/widgets/custom_navigationbar.dart';
 import 'package:yosyelan_inventary/presentation/products/screens/categorys_screen.dart';
+import 'package:yosyelan_inventary/presentation/searchProduct/screens/search_product_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeBloc = context.watch<HomeBloc>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           PageView(
@@ -23,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             controller: _pageController,
             children: const [
               CategorysScreen(),
-              Center(child: Text("hola2")),
+              SearchProductScreen(),
               Center(child: Text("hola3")),
               Center(child: Text("hola4")),
             ],

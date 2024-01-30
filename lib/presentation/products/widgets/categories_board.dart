@@ -75,8 +75,8 @@ class CustomCategoryColumnCard extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             context.read<ProductsBloc>().add(
-                // OnGetProductsByCategoryEvent(categoryId: categories[index].id));
-                OnGetAllProductsEvent());
+                OnGetProductsByCategoryEvent(categoryId: categories[index].id));
+            // OnGetAllProductsEvent());
           },
           child: Container(
             height: isleft

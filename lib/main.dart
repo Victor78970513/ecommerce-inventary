@@ -6,6 +6,7 @@ import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/screens/home_screen.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/products/products_bloc.dart';
+import 'package:yosyelan_inventary/presentation/searchProduct/bloc/search_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => CategoryBloc()),
         BlocProvider(create: (context) => ProductsBloc()),
+        BlocProvider(create: (context) => SearchBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

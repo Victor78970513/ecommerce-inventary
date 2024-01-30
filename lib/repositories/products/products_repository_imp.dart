@@ -22,7 +22,7 @@ class ProductsRepositoryImp extends ProductsRepository {
         db.collection("products");
     QuerySnapshot queryCategoryProducts =
         await collectionProductsByCategoryReference
-            .where('category', isEqualTo: 1)
+            .where('category', isEqualTo: categoryId)
             .get();
 
     queryCategoryProducts.docs.forEach((product) =>
