@@ -39,7 +39,7 @@ class CustomNavigationBar extends StatelessWidget {
           IconButton(
             onPressed: () => onIndexSelected(2),
             icon: const FaIcon(
-              FontAwesomeIcons.shop,
+              FontAwesomeIcons.clipboardList,
               color: color,
               size: iconSize,
             ),
@@ -47,11 +47,11 @@ class CustomNavigationBar extends StatelessWidget {
           IconButton(
             onPressed: () => onIndexSelected(3),
             icon: const FaIcon(
-              FontAwesomeIcons.clipboardList,
+              FontAwesomeIcons.shop,
               color: color,
               size: iconSize,
             ),
-          )
+          ),
         ],
       ),
     );

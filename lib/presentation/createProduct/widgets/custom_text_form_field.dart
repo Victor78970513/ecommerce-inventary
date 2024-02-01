@@ -31,16 +31,18 @@ class CustomInputTextFormField extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: obscureText,
         decoration: InputDecoration(
+            hintStyle: const TextStyle(color: Colors.grey),
+            labelStyle: const TextStyle(color: Colors.grey),
             hintText: hintText,
             labelText: labelText,
             helperText: helperText,
-            floatingLabelStyle: const TextStyle(color: Color(0xff611DE4)),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
+            floatingLabelStyle: const TextStyle(color: Colors.black),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
             enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xff611DE4)),
+                borderSide: const BorderSide(color: Colors.black),
                 borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Color(0xff611DE4)),
+              borderSide: const BorderSide(color: Colors.black),
               // borderSide: const BorderSide(color: Colors.red),
               borderRadius: BorderRadius.circular(10),
             ),

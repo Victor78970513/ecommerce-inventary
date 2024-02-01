@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
             children: const [
               CategorysScreen(),
               SearchProductScreen(),
-              CreateProductScreen(),
               Center(child: Text("hola4")),
+              CreateProductScreen(),
             ],
           ),
           Positioned(
