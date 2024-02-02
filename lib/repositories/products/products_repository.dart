@@ -4,4 +4,6 @@ abstract class ProductsRepository {
   Future<List<Product>> getAllProducts();
 
   Future<List<Product>> getProductsByCategory(int categoryId);
+
+  Future<bool> createNewProduct(Product newProduct);
 }

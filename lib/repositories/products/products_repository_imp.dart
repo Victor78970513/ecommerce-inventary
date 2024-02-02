@@ -29,4 +29,20 @@ class ProductsRepositoryImp extends ProductsRepository {
         categoryProducts.add(Product.fromDocumentSnapshot(product)));
     return categoryProducts;
   }
+
+  @override
+  Future<bool> createNewProduct(Product newProduct) async {
+    CollectionReference collectionCreateProductReference =
+        db.collection("products");
+
+    try {
+      await collectionCreateProductReference
+          .add(newProduct.productToJson())
+          .then((value) => print(value));
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

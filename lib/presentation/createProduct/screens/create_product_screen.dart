@@ -1,26 +1,34 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:yosyelan_inventary/presentation/createProduct/bloc/create_product_bloc.dart';
+
 import 'package:yosyelan_inventary/presentation/createProduct/widgets/custom_text_form_field.dart';
 
 class CreateProductScreen extends StatefulWidget {
-  const CreateProductScreen({super.key});
-
   @override
   State<CreateProductScreen> createState() => _CreateProductScreenState();
 }
 
 class _CreateProductScreenState extends State<CreateProductScreen> {
-  TextEditingController nameCtrl = TextEditingController();
+  final TextEditingController nameCtrl = TextEditingController();
 
-  TextEditingController descriptionCtrl = TextEditingController();
+  final TextEditingController descriptionCtrl = TextEditingController();
 
-  TextEditingController priceCtrl = TextEditingController();
+  final TextEditingController priceCtrl = TextEditingController();
 
-  TextEditingController stockCtrl = TextEditingController();
+  final TextEditingController stockCtrl = TextEditingController();
 
   File? _selectedImage;
+
+  @override
+  void initState() {
+    final bloc = context.read<CreateProductBloc>().state;
+    nameCtrl.text = bloc.productName;
+    super.initState();
+  }
 
   Future _pickImageFromGallery() async {
     final returnedImage = await ImagePicker()
@@ -34,6 +42,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    // final createProductBloc = context.watch<CreateProductBloc>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,22 +69,36 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                 textController: nameCtrl,
                 hintText: "nombre",
                 labelText: "nombre",
+                onChanged: (value) {
+                  context.read<CreateProductBloc>().add(
+                      OnChangeProductValuesEvent(productName: nameCtrl.text));
+                },
               ),
               CustomInputTextFormField(
                 textController: descriptionCtrl,
                 hintText: "descripcion",
                 labelText: "descripcion",
+                onChanged: (value) {},
               ),
               CustomInputTextFormField(
                 textController: priceCtrl,
                 hintText: "precio",
                 labelText: "precio",
+                keyboardType: TextInputType.number,
+                onChanged: (value) {},
               ),
               CustomInputTextFormField(
                 textController: stockCtrl,
                 hintText: "stock en deposito",
                 labelText: "stock en deposito",
+                keyboardType: TextInputType.number,
+                onChanged: (value) {},
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    print(context.read<CreateProductBloc>().state.productName);
+                  },
+                  child: Text("orueb")),
               const SizedBox(height: 100),
             ],
           ),

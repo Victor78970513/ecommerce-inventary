@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
               homeBloc.add(HomeChangeScreenEvent(index: page));
             },
             controller: _pageController,
-            children: const [
+            children: [
               CategorysScreen(),
               SearchProductScreen(),
               Center(child: Text("hola4")),

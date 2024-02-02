@@ -6,8 +6,8 @@ class CustomInputTextFormField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final String? helperText;
-  final String? initialValue;
   final TextEditingController? textController;
+  final Function(String) onChanged;
 
   const CustomInputTextFormField({
     super.key,
@@ -16,8 +16,8 @@ class CustomInputTextFormField extends StatelessWidget {
     this.hintText,
     this.labelText,
     this.helperText,
-    this.initialValue,
     this.textController,
+    required this.onChanged,
   });
 
   @override
@@ -25,7 +25,7 @@ class CustomInputTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: TextFormField(
-        initialValue: initialValue,
+        onChanged: onChanged,
         autofocus: false,
         controller: textController,
         keyboardType: keyboardType,

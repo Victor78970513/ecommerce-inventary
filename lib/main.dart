@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/firebase_options.dart';
+import 'package:yosyelan_inventary/presentation/createProduct/bloc/create_product_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/screens/home_screen.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => CategoryBloc()),
         BlocProvider(create: (context) => ProductsBloc()),
-        BlocProvider(create: (context) => SearchBloc())
+        BlocProvider(create: (context) => SearchBloc()),
+        BlocProvider(create: (context) => CreateProductBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
