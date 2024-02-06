@@ -76,17 +76,20 @@ class CustomCategoryColumnCard extends StatelessWidget {
           onTap: () {
             context.read<ProductsBloc>().add(
                 OnGetProductsByCategoryEvent(categoryId: categories[index].id));
-            // OnGetAllProductsEvent());
           },
           child: Container(
             height: isleft
                 ? index.isEven
-                    ? 90
-                    : 220
+                    // ? 90
+                    ? size.height * 0.1
+                    // : 220
+                    : size.height * 0.25
                 : index.isEven
-                    ? 220
-                    : 90,
-            width: size.width * 0.48,
+                    // ? 220
+                    ? size.height * 0.25
+                    // : 90,
+                    : size.height * 0.1,
+            width: size.width * 0.47,
             margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
               color: Colors.green,

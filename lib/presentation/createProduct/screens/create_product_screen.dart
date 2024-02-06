@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,11 +23,15 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   final TextEditingController stockCtrl = TextEditingController();
 
   File? _selectedImage;
+  String imageUrl = '';
 
   @override
   void initState() {
     final bloc = context.read<CreateProductBloc>().state;
     nameCtrl.text = bloc.productName;
+    descriptionCtrl.text = bloc.productDescription;
+    priceCtrl.text = bloc.productPrice.toString();
+    stockCtrl.text = bloc.productStock.toString();
     super.initState();
   }
 
@@ -34,15 +39,21 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     final returnedImage = await ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 100);
     if (returnedImage == null) return;
-    setState(() {
-      _selectedImage = File(returnedImage.path);
-    });
+
+    _selectedImage = File(returnedImage.path);
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child("products");
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+    await referenceImageToUpload.putFile(File(returnedImage.path));
+    imageUrl = await referenceImageToUpload.getDownloadURL();
+    print(imageUrl);
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final createProductBloc = context.watch<CreateProductBloc>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -78,27 +89,34 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                 textController: descriptionCtrl,
                 hintText: "descripcion",
                 labelText: "descripcion",
-                onChanged: (value) {},
+                onChanged: (value) {
+                  context.read<CreateProductBloc>().add(
+                      OnChangeProductValuesEvent(
+                          productDescription: descriptionCtrl.text));
+                },
               ),
               CustomInputTextFormField(
                 textController: priceCtrl,
                 hintText: "precio",
                 labelText: "precio",
                 keyboardType: TextInputType.number,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  context.read<CreateProductBloc>().add(
+                      OnChangeProductValuesEvent(
+                          productPrice: int.parse(priceCtrl.text)));
+                },
               ),
               CustomInputTextFormField(
                 textController: stockCtrl,
                 hintText: "stock en deposito",
                 labelText: "stock en deposito",
                 keyboardType: TextInputType.number,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  context.read<CreateProductBloc>().add(
+                      OnChangeProductValuesEvent(
+                          productStock: int.parse(stockCtrl.text)));
+                },
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    print(context.read<CreateProductBloc>().state.productName);
-                  },
-                  child: Text("orueb")),
               const SizedBox(height: 100),
             ],
           ),
