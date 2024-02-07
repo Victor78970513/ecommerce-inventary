@@ -31,15 +31,6 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     super.initState();
   }
 
-  // Future<void> _pickImageFromGallery() async {
-  //   final returnedImage = await ImagePicker()
-  //       .pickImage(source: ImageSource.camera, imageQuality: 100);
-  //   if (returnedImage == null) return;
-  //   final createProductBloc = context.read<CreateProductBloc>();
-  //   createProductBloc
-  //       .add(OnChangeProductValuesEvent(localImage: File(returnedImage.path)));
-  // }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -50,28 +41,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _ImageContainer(
-                  // child: [
-                  //   ClipRRect(
-                  //     borderRadius: BorderRadius.circular(40),
-                  //     child: localImage != null
-                  //         ? Image.file(
-                  //             // _selectedImage!,
-                  //             localImage,
-                  //             frameBuilder: (BuildContext context, Widget child,
-                  //                 int? frame, bool wasSynchronouslyLoaded) {
-                  //               if (wasSynchronouslyLoaded) {
-                  //                 return const Center(
-                  //                     child: CircularProgressIndicator());
-                  //               }
-                  //               return child;
-                  //             },
-                  //             fit: BoxFit.fill,
-                  //           )
-                  //         : Image.asset("assets/no-image.jpg"),
-                  //   ),
-                  // ],
-                  ),
+              _ImageContainer(),
               const SizedBox(height: 20),
               CustomInputTextFormField(
                 textController: nameCtrl,
@@ -123,10 +93,12 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                print(context.read<CreateProductBloc>().state.localImage);
+              },
               // onPressed: () => _pickImageFromGallery(),
-              icon: const Icon(Icons.camera_alt_rounded, size: 60)),
-          SizedBox(height: size.height * 0.05)
+              icon: const Icon(Icons.save_as_rounded, size: 60)),
+          SizedBox(height: size.height * 0.07)
         ],
       ),
     );
@@ -152,43 +124,26 @@ class _ImageContainer extends StatelessWidget {
       height: size.height * 0.3,
       width: size.width * 0.85,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Stack(children: [
-        Expanded(
-          child: Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-              child: localImage != null
-                  ? Image.file(
-                      // _selectedImage!,
-                      localImage,
-                      frameBuilder: (BuildContext context, Widget child,
-                          int? frame, bool wasSynchronouslyLoaded) {
-                        if (wasSynchronouslyLoaded) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        return child;
-                      },
-                      fit: BoxFit.fill,
-                    )
-                  : Image.asset("assets/no-image.jpg"),
-            ),
+          borderRadius: BorderRadius.circular(40),
+          image: localImage != null
+              ? DecorationImage(image: FileImage(localImage), fit: BoxFit.fill)
+              : const DecorationImage(
+                  image: AssetImage("assets/no-image.jpg"), fit: BoxFit.fill)),
+      child: Stack(
+        children: [
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: IconButton(
+                onPressed: () => _pickImageFromGallery(context),
+                icon: const Icon(
+                  Icons.camera_alt_rounded,
+                  size: 60,
+                  color: Colors.white,
+                )),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: IconButton(
-              onPressed: () => _pickImageFromGallery(context),
-              icon: const Icon(
-                Icons.camera_alt_rounded,
-                size: 60,
-                color: Colors.white,
-              )),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
