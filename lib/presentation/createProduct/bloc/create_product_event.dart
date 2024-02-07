@@ -9,6 +9,7 @@ class OnChangeProductValuesEvent extends CreateProductEvent {
   final String? productImage;
   final int? productPrice;
   final int? productStock;
+  final File? localImage;
 
   OnChangeProductValuesEvent({
     this.productName,
@@ -16,7 +17,14 @@ class OnChangeProductValuesEvent extends CreateProductEvent {
     this.productImage,
     this.productPrice,
     this.productStock,
+    this.localImage,
   });
+}
+
+class OnSubmitImageToStorage extends CreateProductEvent {
+  final XFile imagePath;
+
+  OnSubmitImageToStorage({required this.imagePath});
 }
 
 class OnSubmitNewProductFirebaseEvent extends CreateProductEvent {

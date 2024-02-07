@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:yosyelan_inventary/models/poduct_model.dart';
 import 'package:yosyelan_inventary/repositories/products/products_repository.dart';
@@ -18,6 +20,7 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     _newProductRepository = ProductsRepositoryImp();
     //
     on<OnChangeProductValuesEvent>(_onChangeProductValuesEvent);
+    on<OnSubmitImageToStorage>(_onSubmitImageToStorage);
     on<OnSubmitNewProductFirebaseEvent>(_onSubmitNewProductFirebaseEvent);
   }
 
@@ -29,6 +32,7 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
       productPrice: event.productPrice,
       productStock: event.productStock,
       productImage: event.productImage,
+      localImage: event.localImage,
     ));
     print(state.productName);
   }
@@ -43,5 +47,12 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     } catch (e) {
       emit(state.copyWith(productCreateError: true));
     }
+  }
+
+  FutureOr<void> _onSubmitImageToStorage(
+      OnSubmitImageToStorage event, Emitter<CreateProductState> emit) async {
+    final imageUrl =
+        await _newProductRepository.sendImageToFirebaseStorage(event.imagePath);
+    emit(state.copyWith(productImage: imageUrl));
   }
 }

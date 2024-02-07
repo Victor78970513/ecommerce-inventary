@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,9 +21,6 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
   final TextEditingController stockCtrl = TextEditingController();
 
-  File? _selectedImage;
-  String imageUrl = '';
-
   @override
   void initState() {
     final bloc = context.read<CreateProductBloc>().state;
@@ -35,46 +31,47 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     super.initState();
   }
 
-  Future _pickImageFromGallery() async {
-    final returnedImage = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 100);
-    if (returnedImage == null) return;
-
-    _selectedImage = File(returnedImage.path);
-    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child("products");
-    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
-    await referenceImageToUpload.putFile(File(returnedImage.path));
-    imageUrl = await referenceImageToUpload.getDownloadURL();
-    print(imageUrl);
-    setState(() {});
-  }
+  // Future<void> _pickImageFromGallery() async {
+  //   final returnedImage = await ImagePicker()
+  //       .pickImage(source: ImageSource.camera, imageQuality: 100);
+  //   if (returnedImage == null) return;
+  //   final createProductBloc = context.read<CreateProductBloc>();
+  //   createProductBloc
+  //       .add(OnChangeProductValuesEvent(localImage: File(returnedImage.path)));
+  // }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    // final createProductBloc = context.watch<CreateProductBloc>();
+    // final localImage = createProductBloc.state.localImage;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: size.height * 0.35,
-                width: size.width * 0.85,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: _selectedImage != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.file(
-                          _selectedImage!,
-                          fit: BoxFit.fill,
-                        ),
-                      )
-                    : const Placeholder(),
-              ),
+              _ImageContainer(
+                  // child: [
+                  //   ClipRRect(
+                  //     borderRadius: BorderRadius.circular(40),
+                  //     child: localImage != null
+                  //         ? Image.file(
+                  //             // _selectedImage!,
+                  //             localImage,
+                  //             frameBuilder: (BuildContext context, Widget child,
+                  //                 int? frame, bool wasSynchronouslyLoaded) {
+                  //               if (wasSynchronouslyLoaded) {
+                  //                 return const Center(
+                  //                     child: CircularProgressIndicator());
+                  //               }
+                  //               return child;
+                  //             },
+                  //             fit: BoxFit.fill,
+                  //           )
+                  //         : Image.asset("assets/no-image.jpg"),
+                  //   ),
+                  // ],
+                  ),
               const SizedBox(height: 20),
               CustomInputTextFormField(
                 textController: nameCtrl,
@@ -126,11 +123,72 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-              onPressed: () => _pickImageFromGallery(),
+              onPressed: () {},
+              // onPressed: () => _pickImageFromGallery(),
               icon: const Icon(Icons.camera_alt_rounded, size: 60)),
           SizedBox(height: size.height * 0.05)
         ],
       ),
+    );
+  }
+}
+
+class _ImageContainer extends StatelessWidget {
+  Future<void> _pickImageFromGallery(BuildContext context) async {
+    final returnedImage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 100);
+    if (returnedImage == null) return;
+    final createProductBloc = context.read<CreateProductBloc>();
+    createProductBloc
+        .add(OnChangeProductValuesEvent(localImage: File(returnedImage.path)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final createProductBloc = context.watch<CreateProductBloc>();
+    final localImage = createProductBloc.state.localImage;
+    return Container(
+      height: size.height * 0.3,
+      width: size.width * 0.85,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+      ),
+      child: Stack(children: [
+        Expanded(
+          child: Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: localImage != null
+                  ? Image.file(
+                      // _selectedImage!,
+                      localImage,
+                      frameBuilder: (BuildContext context, Widget child,
+                          int? frame, bool wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return child;
+                      },
+                      fit: BoxFit.fill,
+                    )
+                  : Image.asset("assets/no-image.jpg"),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: IconButton(
+              onPressed: () => _pickImageFromGallery(context),
+              icon: const Icon(
+                Icons.camera_alt_rounded,
+                size: 60,
+                color: Colors.white,
+              )),
+        ),
+      ]),
     );
   }
 }

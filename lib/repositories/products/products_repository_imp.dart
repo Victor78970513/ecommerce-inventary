@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:yosyelan_inventary/models/poduct_model.dart';
 import 'package:yosyelan_inventary/repositories/products/products_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,15 +38,24 @@ class ProductsRepositoryImp extends ProductsRepository {
   Future<bool> createNewProduct(Product newProduct) async {
     CollectionReference collectionCreateProductReference =
         db.collection("products");
-
     try {
-      await collectionCreateProductReference
-          .add(newProduct.productToJson())
-          .then((value) => print(value));
+      await collectionCreateProductReference.add(newProduct.productToJson());
       return true;
     } catch (e) {
       print(e);
       return false;
     }
+  }
+
+  @override
+  Future<String> sendImageToFirebaseStorage(XFile imagePath) async {
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child("products");
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+    // await referenceImageToUpload.putFile(File(returnedImage.path));
+    await referenceImageToUpload.putFile(File(imagePath.path));
+    final imageUrl = await referenceImageToUpload.getDownloadURL();
+    return imageUrl;
   }
 }

@@ -7,6 +7,7 @@ class CreateProductState {
   final String productImage;
   final int productPrice;
   final int productStock;
+  final File? localImage;
 
   CreateProductState({
     this.productCreateError = false,
@@ -15,6 +16,7 @@ class CreateProductState {
     this.productImage = "",
     this.productPrice = 0,
     this.productStock = 0,
+    this.localImage,
   });
 
   CreateProductState copyWith({
@@ -24,6 +26,7 @@ class CreateProductState {
     String? productImage,
     int? productPrice,
     int? productStock,
+    File? localImage,
   }) =>
       CreateProductState(
         productCreateError: productCreateError ?? this.productCreateError,
@@ -32,5 +35,6 @@ class CreateProductState {
         productImage: productImage ?? this.productImage,
         productPrice: productPrice ?? this.productPrice,
         productStock: productStock ?? this.productStock,
+        localImage: localImage ?? this.localImage,
       );
 }
