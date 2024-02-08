@@ -34,7 +34,6 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
       productImage: event.productImage,
       localImage: event.localImage,
     ));
-    print(state.productName);
   }
 
   FutureOr<void> _onSubmitNewProductFirebaseEvent(
@@ -45,6 +44,7 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
           await _newProductRepository.createNewProduct(event.newProduct);
       emit(state.copyWith(productCreateError: !resp));
     } catch (e) {
+      print(e);
       emit(state.copyWith(productCreateError: true));
     }
   }

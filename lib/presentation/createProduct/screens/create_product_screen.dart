@@ -3,11 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:yosyelan_inventary/models/poduct_model.dart';
 import 'package:yosyelan_inventary/presentation/createProduct/bloc/create_product_bloc.dart';
 
 import 'package:yosyelan_inventary/presentation/createProduct/widgets/custom_text_form_field.dart';
+import 'package:yosyelan_inventary/repositories/products/products_repository_imp.dart';
+
+XFile? xfile;
 
 class CreateProductScreen extends StatefulWidget {
+  const CreateProductScreen({super.key});
+
   @override
   State<CreateProductScreen> createState() => _CreateProductScreenState();
 }
@@ -34,8 +40,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final createProductBloc = context.watch<CreateProductBloc>();
-    // final localImage = createProductBloc.state.localImage;
+    final createProductBloc = context.watch<CreateProductBloc>().state;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -93,10 +98,25 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-              onPressed: () {
-                print(context.read<CreateProductBloc>().state.localImage);
+              onPressed: () async {
+                final imageUrl = await ProductsRepositoryImp()
+                    .sendImageToFirebaseStorage(xfile!);
+                if (imageUrl != "") {
+                  context
+                      .read<CreateProductBloc>()
+                      .add(OnSubmitNewProductFirebaseEvent(
+                        newProduct: Product(
+                          name: createProductBloc.productName,
+                          categoryId: 101,
+                          description: createProductBloc.productDescription,
+                          price: createProductBloc.productPrice,
+                          stock: createProductBloc.productStock,
+                          image: imageUrl,
+                        ),
+                      ));
+                }
+                // });
               },
-              // onPressed: () => _pickImageFromGallery(),
               icon: const Icon(Icons.save_as_rounded, size: 60)),
           SizedBox(height: size.height * 0.07)
         ],
@@ -113,6 +133,7 @@ class _ImageContainer extends StatelessWidget {
     final createProductBloc = context.read<CreateProductBloc>();
     createProductBloc
         .add(OnChangeProductValuesEvent(localImage: File(returnedImage.path)));
+    xfile = returnedImage;
   }
 
   @override
