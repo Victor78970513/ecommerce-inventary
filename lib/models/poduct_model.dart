@@ -37,7 +37,7 @@ class Product {
       "price": price,
       "stock": stock,
       "image": image,
-      "categoryId": categoryId,
+      "category": categoryId,
     };
   }
 }

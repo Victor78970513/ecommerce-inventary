@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CategoryBloc()),
         BlocProvider(create: (context) => ProductsBloc()),
         BlocProvider(create: (context) => SearchBloc()),
-        BlocProvider(create: (context) => CreateProductBloc()),
+        BlocProvider(
+            create: (context) => CreateProductBloc(
+                homeBloc: BlocProvider.of<HomeBloc>(context))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,6 +2,7 @@ part of 'create_product_bloc.dart';
 
 class CreateProductState {
   final bool productCreateError;
+  final bool sendSuccess;
   final String productName;
   final String productDescription;
   final String productImage;
@@ -11,6 +12,7 @@ class CreateProductState {
 
   CreateProductState({
     this.productCreateError = false,
+    this.sendSuccess = false,
     this.productName = "",
     this.productDescription = "",
     this.productImage = "",
@@ -21,6 +23,7 @@ class CreateProductState {
 
   CreateProductState copyWith({
     bool? productCreateError,
+    bool? sendSuccess,
     String? productName,
     String? productDescription,
     String? productImage,
@@ -30,6 +33,7 @@ class CreateProductState {
   }) =>
       CreateProductState(
         productCreateError: productCreateError ?? this.productCreateError,
+        sendSuccess: sendSuccess ?? this.sendSuccess,
         productName: productName ?? this.productName,
         productDescription: productDescription ?? this.productDescription,
         productImage: productImage ?? this.productImage,

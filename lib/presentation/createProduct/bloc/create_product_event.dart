@@ -32,3 +32,5 @@ class OnSubmitNewProductFirebaseEvent extends CreateProductEvent {
 
   OnSubmitNewProductFirebaseEvent({required this.newProduct});
 }
+
+class OnClearValuesEvent extends CreateProductEvent {}
