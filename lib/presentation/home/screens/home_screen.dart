@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yosyelan_inventary/presentation/createProduct/screens/create_product_screen.dart';
 import 'package:yosyelan_inventary/presentation/createProduct/screens/options_screen.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/widgets/custom_navigationbar.dart';
@@ -29,7 +28,6 @@ class HomeScreen extends StatelessWidget {
               CategorysScreen(),
               SearchProductScreen(),
               Center(child: Text("hola4")),
-              // CreateProductScreen(),
               OptionsScreen(),
             ],
           ),
