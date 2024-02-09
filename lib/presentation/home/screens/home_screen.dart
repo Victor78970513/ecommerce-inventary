@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/presentation/createProduct/screens/create_product_screen.dart';
+import 'package:yosyelan_inventary/presentation/createProduct/screens/options_screen.dart';
 import 'package:yosyelan_inventary/presentation/home/bloc/home_bloc_bloc.dart';
 import 'package:yosyelan_inventary/presentation/home/widgets/custom_navigationbar.dart';
 import 'package:yosyelan_inventary/presentation/products/screens/categorys_screen.dart';
@@ -24,11 +25,12 @@ class HomeScreen extends StatelessWidget {
               homeBloc.add(HomeChangeScreenEvent(index: page));
             },
             controller: _pageController,
-            children: [
+            children: const [
               CategorysScreen(),
               SearchProductScreen(),
               Center(child: Text("hola4")),
-              CreateProductScreen(),
+              // CreateProductScreen(),
+              OptionsScreen(),
             ],
           ),
           Positioned(

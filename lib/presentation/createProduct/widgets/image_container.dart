@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:yosyelan_inventary/presentation/createProduct/bloc/create_product_bloc.dart';
+import 'package:yosyelan_inventary/presentation/createProduct/bloc/create_product/create_product_bloc.dart';
 
 class ImageContainer extends StatelessWidget {
   const ImageContainer({super.key});

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yosyelan_inventary/models/category_model.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/categories/category_bloc.dart';
 import 'package:yosyelan_inventary/presentation/products/bloc/products/products_bloc.dart';
+import 'package:yosyelan_inventary/presentation/products/screens/products_list_screen.dart';
+import 'package:yosyelan_inventary/theme/colors_theme.dart';
 
 class CategoriesBoardWidget extends StatelessWidget {
   const CategoriesBoardWidget({super.key});
@@ -65,17 +67,41 @@ class CustomCategoryColumnCard extends StatelessWidget {
     required this.itemCount,
     required this.categories,
   });
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    late int indexColor;
+    isleft ? indexColor = -1 : indexColor = 3;
     return Column(
         children: List.generate(
       itemCount,
       (index) {
+        if (isleft) {
+          indexColor++;
+          if (indexColor > 2) {
+            indexColor = 0;
+          }
+        } else {
+          indexColor--;
+          if (indexColor < 0) {
+            indexColor = 3;
+          }
+        }
         return GestureDetector(
           onTap: () {
             context.read<ProductsBloc>().add(
                 OnGetProductsByCategoryEvent(categoryId: categories[index].id));
+
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (context) => ProductsListScreen(
+            //           categoryId: index + 1,
+            //         )));
+            print(categories[index].id);
+            print(categories[index].name);
+            print(index + 1);
+            //! SOLVE INDEX PROBLEM (CHECK LIST AND SUBLIST)
+            // TODO : GET PRODUCTS BY NAME CATEGORY INSTEAD OF CATEGORY ID
           },
           child: Container(
             height: isleft
@@ -92,7 +118,12 @@ class CustomCategoryColumnCard extends StatelessWidget {
             width: size.width * 0.47,
             margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
-              color: Colors.green,
+              // color: Colors.green,
+              color: Colors.white,
+              border: Border.all(
+                width: 4,
+                color: ColorsAppTheme.appColors[indexColor],
+              ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(isleft ? 45 : 0),
                 topRight: Radius.circular(isleft ? 0 : 45),
@@ -101,7 +132,11 @@ class CustomCategoryColumnCard extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text("${categories[index].id} ${categories[index].name}"),
+              child: Text(
+                "${categories[index].id} ${categories[index].name}",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         );

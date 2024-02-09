@@ -21,51 +21,47 @@ class _CategorysScreenState extends State<CategorysScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: LayoutBuilder(builder: (context, constrains) {
-        print(constrains.maxHeight);
-        print(constrains.maxWidth);
-        return SafeArea(
-          child: Center(
-              child: Column(
-            children: [
-              const Center(
-                  child: Text("CATEGORIAS", style: TextStyle(fontSize: 25))),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[400],
-                    ),
-                    child: const Icon(Icons.search_outlined, size: 30),
+      body: SafeArea(
+        child: Center(
+            child: Column(
+          children: [
+            const Center(
+                child: Text("CATEGORIAS", style: TextStyle(fontSize: 25))),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[400],
                   ),
-                  Container(
-                    height: 50,
-                    width: size.width * 0.5,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Ver todos",
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                  child: const Icon(Icons.search_outlined, size: 30),
+                ),
+                Container(
+                  height: 50,
+                  width: size.width * 0.5,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Ver todos",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                   ),
-                  const SizedBox(height: 60, width: 60)
-                ],
-              ),
-              const SizedBox(height: 15),
-              const Expanded(child: CategoriesBoardWidget())
-            ],
-          )),
-        );
-      }),
+                ),
+                const SizedBox(height: 60, width: 60)
+              ],
+            ),
+            const SizedBox(height: 15),
+            const Expanded(child: CategoriesBoardWidget())
+          ],
+        )),
+      ),
     );
   }
 }
