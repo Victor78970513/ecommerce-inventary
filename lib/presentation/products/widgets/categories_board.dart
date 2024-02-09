@@ -93,15 +93,10 @@ class CustomCategoryColumnCard extends StatelessWidget {
             context.read<ProductsBloc>().add(
                 OnGetProductsByCategoryEvent(categoryId: categories[index].id));
 
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (context) => ProductsListScreen(
-            //           categoryId: index + 1,
-            //         )));
-            print(categories[index].id);
-            print(categories[index].name);
-            print(index + 1);
-            //! SOLVE INDEX PROBLEM (CHECK LIST AND SUBLIST)
-            // TODO : GET PRODUCTS BY NAME CATEGORY INSTEAD OF CATEGORY ID
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ProductsListScreen(
+                      categoryId: categories[index].id,
+                    )));
           },
           child: Container(
             height: isleft
