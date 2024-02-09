@@ -36,7 +36,7 @@ class _CategorysScreenState extends State<CategorysScreen> {
                   width: 60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey[400],
+                    color: Colors.grey[300],
                   ),
                   child: const Icon(Icons.search_outlined, size: 30),
                 ),
