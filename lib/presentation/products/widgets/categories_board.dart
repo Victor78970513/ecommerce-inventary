@@ -93,10 +93,8 @@ class CustomCategoryColumnCard extends StatelessWidget {
             context.read<ProductsBloc>().add(
                 OnGetProductsByCategoryEvent(categoryId: categories[index].id));
 
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProductsListScreen(
-                      categoryId: categories[index].id,
-                    )));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProductsListScreen()));
           },
           child: Container(
             height: isleft
@@ -104,10 +102,10 @@ class CustomCategoryColumnCard extends StatelessWidget {
                     // ? 90
                     ? size.height * 0.1
                     // : 220
-                    : size.height * 0.25
+                    : size.height * 0.23
                 : index.isEven
                     // ? 220
-                    ? size.height * 0.25
+                    ? size.height * 0.23
                     // : 90,
                     : size.height * 0.1,
             width: size.width * 0.47,

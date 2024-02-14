@@ -48,6 +48,7 @@ class _CategorysScreenState extends State<CategorysScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: const Center(
+                    //TODO: NAVIAGET TO OTHER PAGE WITH A CUSTOM BUILDER FOR ALL PRODUCTS
                     child: Text(
                       "Ver todos",
                       style: TextStyle(color: Colors.white, fontSize: 25),

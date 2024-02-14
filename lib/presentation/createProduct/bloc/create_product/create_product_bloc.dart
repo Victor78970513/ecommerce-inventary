@@ -45,16 +45,13 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
       OnSubmitNewProductFirebaseEvent event,
       Emitter<CreateProductState> emit) async {
     try {
-      final resp =
-          await _newProductRepository.createNewProduct(event.newProduct);
-      print("recien hare el emit");
-      emit(state.copyWith(productCreateError: !resp, sendSuccess: true));
-      print("SUCCESS ${state.sendSuccess}");
+      emit(state.copyWith(loading: true));
+      await _newProductRepository.createNewProduct(event.newProduct);
+      emit(state.copyWith(loading: false, productCreateError: false));
       add(OnClearValuesEvent());
-      homeBloc.add(HomeChangeScreenEvent(index: 0));
     } catch (e) {
       print(e);
-      emit(state.copyWith(productCreateError: true));
+      emit(state.copyWith(loading: false, productCreateError: true));
     }
   }
 
@@ -63,7 +60,6 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     final imageUrl =
         await _newProductRepository.sendImageToFirebaseStorage(event.imagePath);
     emit(state.copyWith(productImage: imageUrl));
-    print("imagenURL: $imageUrl");
   }
 
   FutureOr<void> _onClearValuesEvent(
@@ -75,7 +71,9 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
       localImage: null,
       productPrice: 0,
       productStock: 0,
-      sendSuccess: false,
+      productCreateError: false,
+      loading: false,
+      // sendSuccess: false,
     ));
   }
 }
